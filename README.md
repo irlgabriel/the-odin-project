@@ -1,0 +1,1 @@
+I need to fix overall layout proportions for header, main and footer. I will use percentage of screen size instead of static values(px).
