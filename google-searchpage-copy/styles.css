@@ -109,8 +109,8 @@ a{
   padding: 15px;
   font-size: 16px;
 }
+
 footer{
-  padding-left: 150px;
   background-color: rgb(253, 253, 239);
   font-size: 14px;
   color: gray;
@@ -173,8 +173,7 @@ strong{
   margin-left: 40px;
 }
 #top-footer{
-  padding-bottom: 5px;
-  margin-bottom: 5px;
+  
   border-bottom: 1px solid rgb(177, 177, 177);
 }
 #bottom-footer{
@@ -182,7 +181,9 @@ strong{
 
 }
 #top-footer, #bottom-footer{
-  padding: 10px 0px;
+  padding: 10px 0px 10px 150px;
+  
+  
 }
 #related-searches {
   margin-bottom: 20px;
