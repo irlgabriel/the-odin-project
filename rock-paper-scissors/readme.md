@@ -1,0 +1,1 @@
+I didn't know how to do it better and it is a mess right now. At least it kinda works, I wan't to come back and redo it.
