@@ -60,7 +60,7 @@ function createEndGameBtn(){
   const newGame = document.createElement('button');
   newGame.classList.add('newGameBtn');
   newGame.textContent = "Start a new Game!";
-  newGame.style.cssText = "padding: 10px 15px; margin-top: 25px";
+  newGame.style.cssText = "border: none; outline: none; border-radius: 10px; background-color: gray; font-size: 24px; padding: 25px 40px; color: white; margin-top: 55px";
   newGameDiv.appendChild(newGame);
   bdy.appendChild(newGameDiv);
   return;
