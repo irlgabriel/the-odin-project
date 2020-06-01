@@ -9,10 +9,11 @@ function computerPlay() {
 }
 
 function computerWon() {
-
+  
   const res = document.querySelector("#result-div");
   const winner = document.createElement('p');
   winner.textContent = "Computer wins the game!";
+  winner.style.cssText = "text-align: center; color: white; font-size: 24px";
   res.appendChild(winner);
 }
 
@@ -20,6 +21,7 @@ function playerWon() {
   const res = document.querySelector("#result-div");
   const winner = document.createElement('p');
   winner.textContent = "Player wins the game!";
+  winner.style.cssText = "text-align: center; color: white; font-size: 24px";
   res.appendChild(winner);
 }
 

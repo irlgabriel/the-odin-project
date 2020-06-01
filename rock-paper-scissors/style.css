@@ -28,9 +28,20 @@ header{
 #scores{
   justify-content: space-around;
   color: white;
+  margin-bottom: 30px;
+  font-size: 24px;
+
+}
+.buttons::before{
+  content: "";
+  width: 20vh;
+}
+.buttons::after{
+  content: "";
+  width: 20vh;
 }
 .buttons{
-  justify-content: space-around;
+  justify-content: space-between;
 }
 .btn{
   padding: 1.5rem 2.5rem;
@@ -39,4 +50,10 @@ header{
   border: none;
   outline: none;
   
+}
+#rock {
+  background-color: gray;
+}
+#paper{
+  background-color: rgb(255, 255, 191);
 }
