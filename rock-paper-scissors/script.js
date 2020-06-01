@@ -30,15 +30,8 @@ buttons.forEach( (button) => {
   button.addEventListener('click', (e) => {
     if(endGame == true) return;
 
-    if(computerScore == 5) {
-      computerWon();
-      endGame = true;
-    }
-    else if(playerScore == 5) {
-      playerWon();
-      endGame = true;
-    }
-    else game(button.id);
+    if(computerScore == 5 || playerScore == 5) endGame = true;
+      else game(button.id);
   })
 })
 
@@ -47,58 +40,45 @@ buttons.forEach( (button) => {
 function game(player) {
   let computer = computerPlay();
   const currentRound = document.querySelector('#round-result');
-
-  switch(player) {
-    case 'paper':
-      switch(computer) {
-        case 'paper':
-          currentRound.textContent = 'It is a draw!';
-          break;
-        case 'rock':
-          currentRound.textContent = 'Paper wraps rock, You Win!';
-          playerScore ++;
-          break;
-        case 'scissors':
-          currentRound.textContent = 'Scissors cut paper, You Lose!';
-          computerScore ++;
-          break;
+  if(player == computer) 
+    currentRound.textContent = "It is a Draw";
+  else {
+    if(player == 'rock')
+      if(computer == 'paper') {
+        currentRound.textContent = "Computer Wins!";
+        computerScore ++;
       }
-      break;
-    case 'rock':
-      switch(computer) {
-        case 'rock':
-          currentRound.textContent = 'It is a draw!';
-          break;
-        case 'paper':
-          currentRound.textContent = 'Paper wraps rock, You Lose!';
-          computerScore ++;
-          break;
-        case 'scissors':
-          currentRound.textContent = 'Rock crushses Scissors, You win!';
-          playerScore ++;
-          break;
+      else {
+        currentRound.textContent = "Player Wins"; 
+        playerScore++;
       }
-      break;
-    case 'scissors':
-      switch(computer) {
-        case 'scissors':
-          currentRound.textContent = 'It is a draw';
-          break;
-        case 'rock':
-          currentRound.textContent = 'Rock crushes scissors, You Lose!';
-          computerScore ++;
-          break;
-        case 'paper':
-          currentRound.textContent = 'Scissors cut paper, You Win!';
-          playerScore ++;
-          break;
+    else if(player == 'paper')
+      if(computer == 'rock') {
+        currentRound.textContent = "Player wins";
+        playerScore ++;
       }
-      break;
-  }
+      else {
+        currentRound.textContent = "Computer wins";
+        computerScore ++;
+      }
+    else {
+      if(computer == 'rock') {
+        currentRound.textContent = "Computer wins";
+        computerScore ++;
+      }
+      else {
+        currentRound.textContent = "Player wins";
+        playerScore ++;
+      }
+    }
+  }     
   const compScore = document.querySelector('#computerScore');
   compScore.textContent = `Computer's score: ${computerScore}`;
   const plScore = document.querySelector('#playerScore');
   plScore.textContent = `Player's score: ${playerScore}`;
+  
+  if(computerScore == 5) computerWon();
+  if(playerScore == 5) playerWon();
 
 }
 
