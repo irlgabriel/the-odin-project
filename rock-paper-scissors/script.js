@@ -1,7 +1,7 @@
 
 let playerScore = 0;
 let computerScore = 0;
-
+let endGame = false;
 
 function computerPlay() {
   const r = Math.random();
@@ -28,11 +28,15 @@ function playerWon() {
 const buttons = document.querySelectorAll('button');
 buttons.forEach( (button) => {
   button.addEventListener('click', (e) => {
+    if(endGame == true) return;
+
     if(computerScore == 5) {
       computerWon();
+      endGame = true;
     }
     else if(playerScore == 5) {
       playerWon();
+      endGame = true;
     }
     else game(button.id);
   })
