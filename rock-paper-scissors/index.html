@@ -2,10 +2,25 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <script src="script.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
 
   </head>
   <body>
-
+    <header>
+      <h1>Rock Paper Scissors Game!</h1>
+    </header>
+    <div class="buttons flex-container">
+      <button class='btn' id="rock">Rock</button>
+      <button class='btn' id="paper">Paper</button>
+      <button class='btn' id="scissors">Scissors</button>
+    </div>
+    <div id="result-div">
+      <p id="round-result"></p>
+      <div id="scores" class="flex-container">
+        <p id="computerScore">Computer's score: 0</p>
+        <p id="playerScore">Player's score: 0</p>
+      </div>
+    </div>
   </body>
+  <script src="script.js"></script>
 </html>

@@ -1,0 +1,42 @@
+*{
+  padding: 0px;
+  margin: 0px;
+  box-sizing: content-box;
+ 
+}
+
+body{
+  background-image: linear-gradient(35deg, rgb(64, 140, 255), rgb(68, 62, 153));
+  height: 100vh;
+}
+
+header{
+  margin: 2rem;
+  text-align: center;
+  color: white;
+}
+.flex-container{
+  display: flex;
+}
+#round-result {
+  text-align: center;
+  color: white;
+  font-size: 24px;
+  margin: 25px 0px;
+}
+
+#scores{
+  justify-content: space-around;
+  color: white;
+}
+.buttons{
+  justify-content: space-around;
+}
+.btn{
+  padding: 1.5rem 2.5rem;
+  margin: 10px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  
+}
