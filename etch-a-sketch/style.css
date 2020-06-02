@@ -1,0 +1,30 @@
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: content-box;
+}
+
+body {
+  background-color: rgb(255, 228, 205);
+  
+  height: 600px;
+  width: 900px;
+  margin: 15px auto;
+}
+header{
+  width: 100%;
+  text-align: center;
+}
+
+
+#clear{
+  margin: 15px auto;
+  padding: 15px 25px;
+}
+@media (max-width: 900px) {
+  body{
+    height: 400px;
+    width: 600px;
+    
+  }
+}
