@@ -16,8 +16,10 @@ function getResult() {
   return result.textContent;
 }
 function updateResult(num) {
-  result.textContent = num;
+  if(result.textContent == 0) result.textContent = num;
+    else result.textContent += num;
 }
+
 //event listener for clear;
 const clearBtn = document.querySelector('.clear-btn');
 clearBtn.addEventListener('click', () =>{
@@ -39,5 +41,21 @@ plusMinus.addEventListener('click', () =>{
 //event listener for percentage
 const percent = document.querySelector('.percentage');
 percent.addEventListener('click', () =>{
-  
+  result.textContent /= 100.0;
+})
+
+//event listener for operators
+const operators = document.querySelectorAll('.operator');
+for(operator of operators) {
+  operator.addEventListener('click', () => {
+    //store displayed input;
+    const first = result.textContent;
+    //clear current display;
+    result.textContent = 0;
+  })
+}
+//event listener for comma
+const comma = document.querySelector('#comma');
+comma.addEventListener('click', () => {
+  if(result.textContent != 0 && !result.textContent.includes('.')) updateResult('.');
 })
