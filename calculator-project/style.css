@@ -6,7 +6,7 @@
 }
 body{
   height: 100vh;
-  background-color: rgb(70, 70, 70);
+  background-image: linear-gradient(30deg, white, rgba(162, 238, 238, 0.705));
 }
 
 .flex-container{
@@ -36,7 +36,7 @@ body{
   margin: 0 auto;
 }
 
-.number{
+.number, #comma{
   background-color: gray;
 }
 
@@ -51,14 +51,19 @@ body{
   text-align: center;
   height: 100%;
   position: relative;
+
 }
 .cell:hover{
-  background-color: gray;
+  background-color: rgb(32, 31, 133);
+}
+#comma:hover {
+  background-color: rgb(32, 31, 133);
 }
 .cell p{
   position: absolute;
-  top: 45%;
+  top: 35%;
   left: 45%;
+  font-size: 32px;
 }
 #zero{
   width: 50.5%;
@@ -78,4 +83,7 @@ h1 {
 }
 .operator{
   background-color: orange;
+}
+.modifier{
+  background-color: white;
 }
