@@ -44,7 +44,7 @@ clear.addEventListener('click', (e) => {
   for(cell of [...cells]) {
     cell.style.backgroundColor = 'white';
   }
-  gridSize = prompt('enter grid size: ');
+  gridSize = prompt('enter grid size: ', 16);
   clearGrid();
   createGrid(gridSize);
 })
