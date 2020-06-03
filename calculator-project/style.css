@@ -6,34 +6,62 @@
 }
 body{
   height: 100vh;
-  background-color: rgba(184, 245, 245, 0.575);
+  background-color: rgb(70, 70, 70);
 }
 
 .flex-container{
   display: flex;
 }
 .container{
-  height: 400px;
+  height: 500px;
+}
+#result-div{
+  width: 69.9%;
+  height: 100px;
+  margin: 0 auto;
+  background-color: rgba(122, 209, 195, 0.452);
+  border: 1px solid red;
+  position: relative;
+}
+#result{
+  position: absolute;
+  top:45%;
+  right: 5%;
+  font-size: 32px;
 }
 #calc{
-  flex-direction: column
+  flex-direction: column;
   width: 70%;
   height: 100%;
   margin: 0 auto;
 }
 
+.number{
+  background-color: gray;
+}
+
 .row{
   width: 100%;
   height: 20%;
-  
+
 }
 .cell{
   width: 25%;
-  background-color: rgb(68, 158, 236);
   border: 1px solid red;
+  text-align: center;
+  height: 100%;
+  position: relative;
+}
+.cell:hover{
+  background-color: gray;
+}
+.cell p{
+  position: absolute;
+  top: 45%;
+  left: 45%;
 }
 #zero{
-  width: 50%;
+  width: 50.5%;
   text-align: center;
 }
 #comma{
@@ -42,8 +70,12 @@ body{
 #equal{
   width: 25%;
 }
+
 h1 {
   padding: 30px 0px;
   text-align: center;
   font-size: 36px;
+}
+.operator{
+  background-color: orange;
 }
