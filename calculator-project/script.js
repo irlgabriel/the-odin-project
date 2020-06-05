@@ -1,4 +1,7 @@
 const result = document.getElementById('result');
+let first = 0;
+let second = 0;
+let op;
 
 function add(a, b) {
   return a + b;
@@ -20,11 +23,34 @@ function updateResult(num) {
     else result.textContent += num;
 }
 
+function operate(a, b, op) {
+  switch(op) {
+    case '+':
+      updateResult(add(a, b));
+      break;
+    case '-':
+      updateResult(subtract(a, b));
+      break;
+    case '/':
+      updateResult(divide(a, b));
+      break;
+    case '*':
+      updateResult(multiply(a, b));
+      break;
+  }
+  
+}
+
+
 //event listener for clear;
 const clearBtn = document.querySelector('.clear-btn');
 clearBtn.addEventListener('click', () =>{
   document.getElementById('result').textContent = 0;
+  first = 0;
+  second = 0;
+  op = '';
 })
+
 //event listeners for numbers;
 const buttons = document.querySelectorAll('.number');
 for(let i = 0; i < buttons.length; i ++) {
@@ -33,11 +59,13 @@ for(let i = 0; i < buttons.length; i ++) {
     updateResult(txt);
   })
 }
+
 //event listener for plus-minus
 const plusMinus = document.querySelector('.plus-minus');
 plusMinus.addEventListener('click', () =>{
   result.textContent = -result.textContent;
 })
+
 //event listener for percentage
 const percent = document.querySelector('.percentage');
 percent.addEventListener('click', () =>{
@@ -46,16 +74,28 @@ percent.addEventListener('click', () =>{
 
 //event listener for operators
 const operators = document.querySelectorAll('.operator');
-for(operator of operators) {
+for(operator of [...operators]) {
   operator.addEventListener('click', () => {
     //store displayed input;
-    const first = result.textContent;
+    first = Number(result.textContent);
     //clear current display;
     result.textContent = 0;
+    //store operator;
+    op = operator.firstElementChild.textContent;
   })
 }
+
 //event listener for comma
 const comma = document.querySelector('#comma');
 comma.addEventListener('click', () => {
   if(result.textContent != 0 && !result.textContent.includes('.')) updateResult('.');
+})
+
+//event listener for equal
+const equal = document.getElementById('equal');
+equal.addEventListener('click' , () => {
+  second = Number(result.textContent);
+  result.textContent = 0;
+  operate(first, second, op);
+
 })
