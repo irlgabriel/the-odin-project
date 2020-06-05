@@ -1,7 +1,7 @@
 const result = document.getElementById('result');
 let first = 0;
 let second = 0;
-let op;
+let op = '';
 
 function add(a, b) {
   return a + b;
@@ -74,14 +74,14 @@ percent.addEventListener('click', () =>{
 
 //event listener for operators
 const operators = document.querySelectorAll('.operator');
-for(operator of [...operators]) {
-  operator.addEventListener('click', () => {
+for(let i = 0; i < operators.length; i ++) {
+  operators[i].addEventListener('click', () => {
     //store displayed input;
     first = Number(result.textContent);
     //clear current display;
     result.textContent = 0;
     //store operator;
-    op = operator.firstElementChild.textContent;
+    op = operators[i].firstElementChild.textContent;
   })
 }
 
