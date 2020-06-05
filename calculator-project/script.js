@@ -1,7 +1,7 @@
 const result = document.getElementById('result');
-let first = 0;
-let second = 0;
-let op = '';
+let first = undefined;
+let second = undefined;
+let op = undefined;
 
 function add(a, b) {
   return a + b;
@@ -15,29 +15,33 @@ function multiply(a, b) {
 function divide(a, b) {
   return a / b;
 }
-function getResult() {
-  return result.textContent;
-}
+
+
 function updateResult(num) {
   if(result.textContent == 0) result.textContent = num;
     else result.textContent += num;
+  result.textContent = Number(result.textContent);
 }
 
 function operate(a, b, op) {
   switch(op) {
     case '+':
-      updateResult(add(a, b));
+      r = add(a,b);
       break;
     case '-':
-      updateResult(subtract(a, b));
+      r = subtract(a, b);
       break;
     case '/':
-      updateResult(divide(a, b));
+      r = divide(a, b);
       break;
     case '*':
-      updateResult(multiply(a, b));
+      r = multiply(a, b);
       break;
+  
   }
+  r = Math.round((r + Number.EPSILON) * 100) / 100
+  first = r;
+  return r;
   
 }
 
@@ -46,9 +50,9 @@ function operate(a, b, op) {
 const clearBtn = document.querySelector('.clear-btn');
 clearBtn.addEventListener('click', () =>{
   document.getElementById('result').textContent = 0;
-  first = 0;
-  second = 0;
-  op = '';
+  first = undefined;
+  second = undefined;
+  op = undefined;
 })
 
 //event listeners for numbers;
@@ -76,6 +80,15 @@ percent.addEventListener('click', () =>{
 const operators = document.querySelectorAll('.operator');
 for(let i = 0; i < operators.length; i ++) {
   operators[i].addEventListener('click', () => {
+    //we need to check if there is a previous
+    //computation that we need to take care of
+    /*
+    if(first != undefined && second != undefined && op != undefined) {
+      r = operate(first, second, op);
+      updateResult(Number(r));
+    }
+    */
+
     //store displayed input;
     first = Number(result.textContent);
     //clear current display;
@@ -96,6 +109,7 @@ const equal = document.getElementById('equal');
 equal.addEventListener('click' , () => {
   second = Number(result.textContent);
   result.textContent = 0;
-  operate(first, second, op);
+  r = operate(first, second, op);
+  updateResult(r);
 
 })
