@@ -1,26 +1,26 @@
 
 require 'pry'
 
-def caesar_cipher(str, shift)
+def shift_char(char, shift) 
   lower = ('a'..'z').to_a
   upper = ('A'..'Z').to_a
-  output = ''
-  str.split("").each do |char|
-    if !(/[a-zA-Z]/.match(char)) 
-      output += char
+  if !(/[a-zA-Z]/.match(char)) 
+    char
+  else
+    if /[a-z]/.match(char)
+      lower[(lower.find_index(char) + shift) % 26]
     else
-      if /[a-z]/.match(char)
-        output += lower[(lower.find_index(char) + shift) % 26]
-      else
-        output += upper[(upper.find_index(char) + shift) % 26]
-      end
+      upper[(upper.find_index(char) + shift) % 26]
     end
   end
-  p output
+end
+
+def caesar_cipher(str, shift)
+  str.split("").map { |char| shift_char(char, shift)}.join
 end
 
 puts('enter string')
 str = gets.chomp.to_s;
 puts('enter number')
 shift = gets.chomp.to_i;
-caesar_cipher(str, shift)
+p caesar_cipher(str, shift)
