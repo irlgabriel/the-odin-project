@@ -16,11 +16,13 @@ def shift_char(char, shift)
 end
 
 def caesar_cipher(str, shift)
-  str.split("").map { |char| shift_char(char, shift)}.join
+  p str.split("").map { |char| shift_char(char, shift)}.join
 end
 
-puts('enter string')
+puts('enter string to be encrypted')
 str = gets.chomp.to_s;
-puts('enter number')
+
+puts('enter number to shift letters by')
 shift = gets.chomp.to_i;
-p caesar_cipher(str, shift)
+
+caesar_cipher(str, shift)
