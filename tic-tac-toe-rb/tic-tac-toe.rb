@@ -107,7 +107,17 @@ class TicTacToe
       end
     end
     #check diagonals
-
+    @arr.each_with_index do |row, row_idx|
+      row.each_with_index do |cell, col_idx|
+        if cell == '[X]' || cell == '[O]'
+          if (@arr[row_idx - 1][col_idx - 1] == cell && @arr[row_idx + 1][col_idx + 1] == cell) or
+             (@arr[row_idx - 1][col_idx + 1] == cell && @arr[row_idx + 1][col_idx - 1] == cell)
+            @win = true
+            @winner = cell[1]
+          end
+        end
+      end
+    end
     #return
     @win
   end
