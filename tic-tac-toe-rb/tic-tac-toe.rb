@@ -24,7 +24,7 @@ end
 
 class TicTacToe 
   include TwoDArrays
-  attr_reader :exit, :win
+  attr_reader :exit, :win, :winner
   @@sign = 'X'
   def initialize
     begin
@@ -77,16 +77,56 @@ class TicTacToe
       @exit = true
     else
       @arr[row][col] = "[#{@@sign}]" #place sign
-      @@sign == 'X' ? @@sign = 'O' : @@sign = 'X' #swap sign next player
+      @@sign == 'X' ? @@sign = 'O' : @@sign = 'X' #swap sign
+      win?
     end
   end
 
+  def win?
+    #check if anyone won
+    #check lines
+    @arr.each do |row|
+      row.each_with_index do |cell, idx|
+        if cell == '[X]' || cell == '[O]'
+          if row[idx - 1] == cell && row[idx + 1] == cell
+            @win = true
+            @winner = cell[1]
+          end
+        end
+      end
+    end
+    #check columns
+    @arr.each_with_index do |row, row_idx|
+      row.each_with_index do |cell, col_idx|
+        if cell == '[X]' || cell == '[O]'
+          if @arr[row_idx - 1][col_idx] == cell && @arr[row_idx + 1][col_idx] == cell
+            @win = true
+            @winner = cell[1]
+          end
+        end
+      end
+    end
+    #check diagonals
+
+    #return
+    @win
+  end
 
 end
 
-
-game = TicTacToe.new
-while game.win == false && game.exit == false
-  game.show_table
-  game.place
+def play
+  game = TicTacToe.new
+  while game.win == false && game.exit == false
+    game.show_table
+    game.place
+  end
+  if game.exit == true
+    puts "Game quit!"
+  end
+  if game.win == true
+    game.show_table
+    puts "Game over. #{game.winner} Won!"
+  end
 end
+
+play()
