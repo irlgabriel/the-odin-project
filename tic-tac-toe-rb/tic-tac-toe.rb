@@ -24,22 +24,16 @@ end
 
 class TicTacToe 
   include TwoDArrays
-  attr_writer :exit
+  attr_reader :exit, :win
   @@sign = 'X'
   def initialize
-    attempts = 3
     begin
       puts "Choose a grid size(3-10)"
       grid_size = gets.chomp.to_i
-      if grid_size < 3 || grid_size > 10
-        raise "Invalid input. Try Again"
-      end
+        raise "Invalid input. Defaulted to 3" if grid_size < 3 || grid_size > 10
     rescue Exception=>e
       puts "#{e}"
-      if(attempts > 0)
-        attempts -= 1
-        retry
-      end
+      grid_size = 3
     end
 
     @grid_size = grid_size
@@ -58,20 +52,12 @@ class TicTacToe
 
   def getPos
     retries = 3 #number of attempts
-
     begin
       puts "Choose a row(#{0..@grid_size}) to place #{@@sign} in: "
       row = gets.chomp.to_i;
       puts "Choose a column(#{0..@grid_size}) to place #{@@sign} in: "
       col = gets.chomp.to_i;
-
-      if valid_pos(row, col) 
-        @arr[row][col] = "[#{@@sign}]" #place sign
-        @@sign == 'X' ? @@sign = 'O' : @@sign = 'X' #swap sign next player
-      else
-        raise "Invalid Input"
-      end
-
+    raise "Invalid Input" if valid_pos(row, col) == false
     rescue Exception=>e
       puts "#{e}"
       if(retries > 0) 
@@ -83,24 +69,24 @@ class TicTacToe
     [row, col]
   end
 
-  def put
+  def place
     pos = getPos
     row = pos.first
     col = pos.last
-    if valid_pos(row, col) == false #if false after 3 attempts then we exit
+    if valid_pos(row, col) == false #quit after 3 false attempts
       @exit = true
+    else
+      @arr[row][col] = "[#{@@sign}]" #place sign
+      @@sign == 'X' ? @@sign = 'O' : @@sign = 'X' #swap sign next player
     end
   end
 
-  def win?
-    @win
-  end
 
 end
 
 
 game = TicTacToe.new
-while game.win? == false && game.exit == false
+while game.win == false && game.exit == false
   game.show_table
-  game.put
+  game.place
 end
