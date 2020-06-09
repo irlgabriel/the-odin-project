@@ -12,6 +12,8 @@ class MasterMind
       puts "Enter code to be guessed:"
       code = gets.chomp.upcase
       raise "Code must be 4 'colors' long (eg: RGBW - RED GREEN BLUE WHITE)" if code.length != 4
+      #need to add color checking here too, very important (if we enter a non-color letter the game will never be won)
+
     rescue => exception
       puts exception
       if retries > 0
@@ -38,7 +40,7 @@ class MasterMind
 
     @COLORS = {}
     @code.split('').each do |val|
-      if @COLORS.has_key? val
+      if @COLORS.has_key?(val)
         @COLORS[val] += 1
       else
         @COLORS[val] = 1
@@ -55,7 +57,7 @@ class MasterMind
       puts "#{@rounds} rounds left to guess the code"
       puts "Make a guess:"
       guess = gets.chomp.upcase
-      raise "Code must be 4 'colors' long" if code.length != 4
+      raise "Code must be 4 colors long" if code.length != 4
     rescue => e
       puts e
       if retries > 0
@@ -77,13 +79,20 @@ class MasterMind
     end
 
     #matching colors regardless of positions
-    cur_colors = @COLORS
+    colors = {}
+    @COLORS.each_key do |key|
+      if colors.has_key?(key)
+         colors[key] += 1
+      else
+        colors[key] = 1
+      end
+    end
     
     @guess.split('').each do |col|
       if @COLORS.has_key?(col)
-        if cur_colors[col] > 0
+        if colors[col] > 0
           @matching_col += 1 
-          cur_colors[col] -= 1
+          colors[col] -= 1
         end
       end
     end
