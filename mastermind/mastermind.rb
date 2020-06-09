@@ -1,6 +1,8 @@
-
+require 'pry'
 
 class MasterMind
+  attr_reader :rounds, :win, :exit, :code, :colors
+
   def initialize
     #get code input
     puts "MASTERMIND"
@@ -22,7 +24,7 @@ class MasterMind
     retries = 3
     begin
       puts "How many rounds(8-12)"
-      rounds = gets.chomp.upcase
+      rounds = gets.chomp.to_i
       raise "Number of rounds must be even" if rounds % 2 == 1 
       raise "Number of rounds must be between 8-12" if rounds < 8 || rounds > 12 
     rescue => exception
@@ -34,12 +36,23 @@ class MasterMind
     end
     @rounds = rounds
 
+    @COLORS = {}
+    @code.split('').each do |val|
+      if @COLORS.has_key? val
+        @COLORS[val] += 1
+      else
+        @COLORS[val] = 1
+      end
+    end
+
+    @exit = false
+    @win = false
   end
 
   def make_guess
     retries = 3
     begin 
-      puts "#{@rounds} left to guess the code"
+      puts "#{@rounds} rounds left to guess the code"
       puts "Make a guess:"
       guess = gets.chomp.upcase
       raise "Code must be 4 'colors' long" if code.length != 4
@@ -51,21 +64,53 @@ class MasterMind
       end
     end
     @guess = guess 
+    @rounds -= 1
   end
 
   def assign_guess
-    matching_characters = 0
-    matching_pos = 0
-    #matching positions and colors
-    @guess.each_with_index do |val, idx|
-      matching_pos += 1 if val == @code[idx]
+    @matching_col = 0
+    @matching_pos = 0
+
+    #matching positions
+    @guess.split('').each_with_index do |val, idx|
+      @matching_pos += 1 if val == @code.split('')[idx]
     end
-    #matching characters
-        
-      
 
-
+    #matching colors regardless of positions
+    cur_colors = @COLORS
+    
+    @guess.split('').each do |col|
+      if @COLORS.has_key?(col)
+        if cur_colors[col] > 0
+          @matching_col += 1 
+          cur_colors[col] -= 1
+        end
+      end
+    end
+    #check if we win or we lost
+    win?
+    exit?
+    
+    puts "You guessed: #{@matching_col} colors and #{@matching_pos} positions."
   end
 
+  def win?
+    @win = true if @matching_pos == 4
+    puts "You won!" if @win
+  end
+
+  def exit?
+    @exit = true if @rounds == 0
+    puts "You lost!" if @exit
+  end
 end
 
+def play
+  game = MasterMind.new
+  while game.win == false && game.exit == false
+    game.make_guess
+    game.assign_guess
+  end
+end
+
+play
