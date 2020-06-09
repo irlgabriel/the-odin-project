@@ -6,14 +6,14 @@ class MasterMind
   def initialize
     #get code input
     puts "MASTERMIND"
-    puts "6 Colors: Black, White, Red, Yellow, Blue, Green"
+    puts "6 Colors: Black, White, Red, Yellow, ORANGE, Green"
     retries = 3
     begin
       puts "Enter code to be guessed:"
       code = gets.chomp.upcase
-      raise "Code must be 4 'colors' long (eg: RGBW - RED GREEN BLUE WHITE)" if code.length != 4
+      raise "Code must be 4 'colors' long (eg: RGBW - RED GREEN ORANGE WHITE)" if code.length != 4
       #need to add color checking here too, very important (if we enter a non-color letter the game will never be won)
-
+      raise "Code conatains non-color(B-W-R-Y-O-G only!)" if valid_code?(code) == false
     rescue => exception
       puts exception
       if retries > 0
@@ -87,7 +87,7 @@ class MasterMind
         colors[key] = 1
       end
     end
-    
+
     @guess.split('').each do |col|
       if @COLORS.has_key?(col)
         if colors[col] > 0
@@ -112,6 +112,12 @@ class MasterMind
     @exit = true if @rounds == 0
     puts "You lost!" if @exit
   end
+
+  def valid_code?(code)
+    #regexp?
+    true #for now.
+  end
+
 end
 
 def play
@@ -121,5 +127,6 @@ def play
     game.assign_guess
   end
 end
+
 
 play
