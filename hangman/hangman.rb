@@ -73,4 +73,4 @@ class Game
 end
 
 new_game = Game.new
-new_game.save_game
+#new_game.save_game
