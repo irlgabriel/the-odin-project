@@ -28,7 +28,7 @@ class HangMan
     guessed_a_letter = false
     @current_guess.split('').each_with_index do |char, idx|
       if @master_word[idx] == letter
-        #if we reach here then no rounds should be subtracted!
+        #if we guess a letter then no rounds should be subtracted!
         guessed_a_letter = true
         @current_guess[idx] = letter
       else
@@ -40,8 +40,6 @@ class HangMan
     puts @current_guess
   end
 
-
-
 end
 
 class Game
@@ -51,6 +49,7 @@ class Game
     while @game.rounds > 0 && @game.master_word != @game.current_guess do
       @game.guess
     end
+
     #decide if game won or lost
     if @game.master_word == @game.current_guess
       puts "Congratulations, you guessed the word!"
