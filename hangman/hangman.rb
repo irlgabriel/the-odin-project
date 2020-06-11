@@ -18,6 +18,7 @@ class HangMan
   def guess
     puts "Pick a letter! #{@rounds} attempts left!"
     letter = gets.chomp.downcase
+    
     while @letters_used.has_key? letter do
       puts "Letter #{letter} used, pick another one! #{@rounds} attempts left!"
       letter = gets.chomp.downcase
@@ -46,6 +47,9 @@ class Game
   attr_reader :game
   def initialize
     @game = HangMan.new
+  end
+
+  def play
     while @game.rounds > 0 && @game.master_word != @game.current_guess do
       @game.guess
     end
@@ -73,4 +77,4 @@ class Game
 end
 
 new_game = Game.new
-#new_game.save_game
+new_game.play
