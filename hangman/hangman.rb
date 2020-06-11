@@ -1,115 +1,77 @@
 require 'pry'
 require 'yaml'
-
-
-def get_random_word
-  words = []
-  File.readlines('dict.txt').each do |line|
-    line = line.chomp
-    words.push(line) if line.length >= 5 && line.length <= 12
-  end
-  words[(words.length * rand).to_i]
-end
-
-
-def save_this(obj) 
-  Dir.mkdir 'SavedGames' unless Dir.exists? 'SavedGames'
-  filename = 'SavedGames/save'
-  File.open(filename, 'w') do |file|
-    save = YAML.dump(self)
-    file.puts save
-  end
-end
-
+require_relative 'randomizer.rb'
 
 class HangMan
-  attr_reader :word, :rounds, :progress
+  include Randomizer
+
+  attr_reader :master_word, :rounds, :current_guess, :master_word
+
   def initialize
-    @word = get_random_word
-    @progress = "____________"[0..@word.length - 1]
-    @rounds = 8
-
-    puts "Welcome to Command Line Hangman!"
+    @master_word = get_random_word("dict.txt").downcase
+    @rounds = 10
+    @letters_used = {}
+    @current_guess = "____________"[0..@master_word.length - 1]
+    puts "H - A - N - G - M - A - N"
   end
 
-  def show_progress
-    prog = ''
-    @progress.split('').each do |letter|
-      prog += letter + ' '
+  def guess
+    puts "Pick a letter! #{@rounds} attempts left!"
+    letter = gets.chomp.downcase
+    while @letters_used.has_key? letter do
+      puts "Letter #{letter} used, pick another one! #{@rounds} attempts left!"
+      letter = gets.chomp.downcase
     end
-    puts prog
 
-  end
+    @letters_used[letter] = 1
 
-  def make_guess
-    puts "Choose a letter! (#{@rounds} guesses left!)"
-    @letter = gets.chomp.downcase
-    @letter
-  end
-
-  def assess_guess
-    decrease_rounds = true
-    @word.split('').each_with_index do |letter, idx|
-      if @word[idx] == @letter
-        @progress[idx] = @letter
-        decrease_rounds = false #dont decrease rounds if we guess letter
-      end
-    end
-    @rounds -= 1 if decrease_rounds == true
-  end
-
-  def win?
-    !progress.include?('_')
-  end
-
-end
-
-
-class Game
-  def initialize
-    @game = HangMan.new
-    @game.show_progress
-    @guessed_letters = {}
-    @exit = false 
-
-    while @game.rounds > 0 && !@game.win? && @exit == false
-      begin
-        letter = @game.make_guess  
-        raise "Letter already used, chose another one!" if @guessed_letters.has_key?(letter)
-      rescue => exception
-        puts exception
-        retry  
-      end
-
-      @guessed_letters[letter] = 1 unless letter == 'save' || letter == 'save'
-      if letter == 'save'
-        @exit = true
-        save_this(self)
-      end
-      if letter == 'load'
-        loaded_game = YAML.load(File.read('SavedGames/save'))
+    guessed_a_letter = false
+    @current_guess.split('').each_with_index do |char, idx|
+      if @master_word[idx] == letter
+        #if we reach here then no rounds should be subtracted!
+        guessed_a_letter = true
+        @current_guess[idx] = letter
+      else
         
       end
-      if @exit == false
-        @game.assess_guess
-        @game.show_progress
-      end
     end
+    @rounds -= 1 unless guessed_a_letter == true
 
-    if @exit == false
-      if @game.win?
-        puts "Congratulations! You guessed the word!"
-      else 
-        puts "You lost!"
-      end
-      puts "The word was: #{@game.word}"
-      puts "Try Again?(y/n)"
-      ans = gets.chomp.downcase
-      Game.new if ans == 'y'
+    puts @current_guess
+  end
+
+
+
+end
+
+class Game
+  attr_reader :game
+  def initialize
+    @game = HangMan.new
+    while @game.rounds > 0 && @game.master_word != @game.current_guess do
+      @game.guess
+    end
+    #decide if game won or lost
+    if @game.master_word == @game.current_guess
+      puts "Congratulations, you guessed the word!"
+    else
+      puts "You lost! The word was #{@game.master_word}!"
     end
 
   end
 
+  def save_game
+    Dir.mkdir 'SaveGames' unless Dir.exists?('SaveGames')
+    File.open('SaveGames/save_file', 'w') do |file|
+      file.puts YAML.dump(self)
+    end
+  end
+
+  def load_game
+    puts "No saved games available!" if !File.exists?('SaveGames/save_file')
+    @game = YAML.load(File.read('SaveGames/save_file'))
+  end
 end
 
-Game.new
+new_game = Game.new
+new_game.save_game
