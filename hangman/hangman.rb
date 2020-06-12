@@ -91,6 +91,7 @@ class Game
     Dir.mkdir 'SaveGames' unless Dir.exists?('SaveGames')
     File.open('SaveGames/save_file', 'w') do |file|
       file.puts YAML.dump(self)
+      puts "Game Saved!"
     end
   end
 
