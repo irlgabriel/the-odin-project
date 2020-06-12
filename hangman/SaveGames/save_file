@@ -1,0 +1,7 @@
+--- !ruby/object:Game
+game: !ruby/object:HangMan
+  master_word: recreance
+  rounds: 9
+  letters_used:
+    s: 1
+  current_guess: _________

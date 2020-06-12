@@ -13,6 +13,7 @@ class HangMan
     @letters_used = {}
     @current_guess = "____________"[0..@master_word.length - 1]
     puts "H - A - N - G - M - A - N"
+
   end
 
   def guess
@@ -23,7 +24,7 @@ class HangMan
       puts "Letter #{letter} used, pick another one! #{@rounds} attempts left!"
       letter = gets.chomp.downcase
     end
-
+    return letter if letter == 'save' || letter == 'load'
     @letters_used[letter] = 1
 
     guessed_a_letter = false
@@ -32,8 +33,6 @@ class HangMan
         #if we guess a letter then no rounds should be subtracted!
         guessed_a_letter = true
         @current_guess[idx] = letter
-      else
-        
       end
     end
     @rounds -= 1 unless guessed_a_letter == true
@@ -47,12 +46,37 @@ class Game
   attr_reader :game
   def initialize
     @game = HangMan.new
+    
   end
 
   def play
+    loading = false
+    saving = false
+    puts @game.current_guess
     while @game.rounds > 0 && @game.master_word != @game.current_guess do
-      @game.guess
+      input = @game.guess
+      if input == 'save'
+        saving = true
+        self.save_game
+      end
+
+      if input == 'load'
+        loading = true
+        self.load_game
+      end
+      if loading == true
+        #check if there is a game save!
+        if !File.exists?('SaveGames/save_file')
+          loading = false
+        end
+
+        @game.play unless loading == false
+      end
+      break if loading or saving
     end
+
+    #break out of play method if we saved or loaded
+    return nil if saving == true or loading == true
 
     #decide if game won or lost
     if @game.master_word == @game.current_guess
@@ -71,8 +95,14 @@ class Game
   end
 
   def load_game
-    puts "No saved games available!" if !File.exists?('SaveGames/save_file')
-    @game = YAML.load(File.read('SaveGames/save_file'))
+    if !File.exists?('SaveGames/save_file')
+      puts "No saved games available!" 
+    else
+      @game = YAML.load(File.read('SaveGames/save_file'))
+      puts
+      puts "Game Loaded!"
+    end
+    
   end
 end
 
