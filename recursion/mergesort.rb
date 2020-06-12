@@ -1,11 +1,36 @@
+require 'pry'
 
 def merge(arr, left, mid, right) 
-  L = (left..mid).to_a
-  R = (mid + 1..right).to_a
+  l = arr.slice(left, mid)
+  r = arr.slice(mid, right)
+
+  k = left
   i = 0
   j = 0
-  k = left
+
+  while i < l.length && j < r.length do
+    if l[i] <= r[j]
+      arr[k] = l[i]
+      i += 1
+    else
+      arr[k] = r[j]
+      j += 1
+    end
+    k += 1
+  end
   
+  while i < l.length do
+    arr[k] = l[i]
+    i += 1
+    k += 1
+  end
+  
+  while j < r.length do
+    arr[k] = r[j]
+    j += 1
+    k += 1
+  end
+
 end
 
 def mergesort(arr, left, right)
@@ -16,3 +41,8 @@ def mergesort(arr, left, right)
     merge(arr, left, mid, right)
   end
 end
+
+arr = [5, 0, 1, 0, 4, 12]
+p arr
+mergesort(arr, 0, arr.length - 1)
+p arr
