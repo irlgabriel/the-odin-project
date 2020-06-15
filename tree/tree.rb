@@ -10,17 +10,24 @@ end
 
 class Tree
   def initialize(arr)
-    @arr = arr
+    @arr = arr.uniq.sort
     @root = build_tree(arr, 0, arr.length - 1)
   end
   def build_tree(arr, left, right)
-    nil if left > right
+    return nil if left > right
 
     mid = (left + right) / 2
     root = Node.new(arr[mid])
-    root.left = build_tree(arr, left, mid)
+    root.left = build_tree(arr, left, mid - 1)
     root.right = build_tree(arr, mid + 1, right)
     root
+  end
+  def insert(val)
+    root = @root
+
+  end
+  def find(val)
+
   end
 end
 
@@ -29,4 +36,4 @@ arr = []
   arr.push(rand(15))
 end
 tree = Tree.new(arr)
-puts tree
+puts tree.inspect
