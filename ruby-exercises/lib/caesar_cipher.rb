@@ -19,10 +19,3 @@ def caesar_cipher(str, shift)
   p str.split("").map { |char| shift_char(char, shift)}.join
 end
 
-puts('enter string to be encrypted')
-str = gets.chomp.to_s;
-
-puts('enter number to shift letters by')
-shift = gets.chomp.to_i;
-
-caesar_cipher(str, shift)
